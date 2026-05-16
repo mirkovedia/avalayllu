@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AvalAyllu - Pitch Deck</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0a; color: #fafafa; overflow: hidden; }
+
+    .slides { width: 100vw; height: 100vh; scroll-snap-type: y mandatory; overflow-y: scroll; }
+    .slide { width: 100vw; height: 100vh; scroll-snap-align: start; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; position: relative; }
+
+    .slide::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(229, 62, 62, 0.08) 0%, transparent 60%); pointer-events: none; }
+
+    h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, #e53e3e, #f56565, #fc8181); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; }
+    h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; color: #fff; text-align: center; }
+    h3 { font-size: 1.8rem; font-weight: 600; margin-bottom: 1rem; color: #e53e3e; }
+    p { font-size: 1.3rem; line-height: 1.8; color: #a0aec0; text-align: center; max-width: 800px; }
+
+    .subtitle { font-size: 1.5rem; color: #718096; margin-top: 0.5rem; }
+    .stat { font-size: 4rem; font-weight: 800; color: #e53e3e; }
+    .stat-label { font-size: 1.1rem; color: #718096; margin-top: 0.25rem; }
+
+    .grid { display: grid; gap: 2rem; margin-top: 2rem; max-width: 1000px; width: 100%; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 2rem; text-align: center; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-4px); border-color: rgba(229, 62, 62, 0.3); }
+    .card h3 { font-size: 1.3rem; }
+    .card p { font-size: 1rem; text-align: center; }
+
+    .flow { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; justify-content: center; }
+    .flow-step { background: rgba(229, 62, 62, 0.1); border: 1px solid rgba(229, 62, 62, 0.3); border-radius: 12px; padding: 1rem 1.5rem; }
+    .flow-arrow { color: #e53e3e; font-size: 1.5rem; }
+
+    .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600; margin: 0.25rem; }
+    .badge-red { background: rgba(229, 62, 62, 0.2); color: #fc8181; }
+    .badge-gray { background: rgba(255,255,255,0.1); color: #a0aec0; }
+
+    .logo { font-size: 5rem; margin-bottom: 1rem; }
+    .slide-number { position: absolute; bottom: 2rem; right: 2rem; color: #4a5568; font-size: 0.9rem; }
+
+    .partners { display: flex; gap: 2rem; margin-top: 2rem; align-items: center; }
+    .partner { padding: 1rem 2rem; background: rgba(255,255,255,0.05); border-radius: 8px; color: #a0aec0; font-weight: 600; }
+
+    .metric-row { display: flex; gap: 3rem; margin-top: 2rem; }
+    .metric { text-align: center; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      h2 { font-size: 1.8rem; }
+      .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+      .slide { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slides">
+
+    <!-- Slide 1: Cover -->
+    <div class="slide">
+      <div class="logo">🏔️</div>
+      <h1>AvalAyllu</h1>
+      <p class="subtitle">Ahorro Rotativo Descentralizado para LatAm</p>
+      <p style="margin-top: 2rem; font-size: 1.1rem;">Digitalizando el Pasanaku con Smart Contracts en Avalanche</p>
+      <div class="partners">
+        <span class="badge badge-red">Avalanche C-Chain</span>
+        <span class="badge badge-red">USDC</span>
+        <span class="badge badge-red">Claude AI</span>
+        <span class="badge badge-red">Wavy Node</span>
+      </div>
+      <span class="slide-number">1/10</span>
+    </div>
+
+    <!-- Slide 2: Problem -->
+    <div class="slide">
+      <h2>El Problema</h2>
+      <div class="metric-row">
+        <div class="metric">
+          <div class="stat">70%</div>
+          <div class="stat-label">Sub-bancarizados en LatAm</div>
+        </div>
+        <div class="metric">
+          <div class="stat">$50B+</div>
+          <div class="stat-label">Ahorro rotativo informal/año</div>
+        </div>
+      </div>
+      <p style="margin-top: 2rem;">Millones participan en Pasanaku/Tandas, pero estos sistemas <strong style="color:#fc8181">no generan historial crediticio</strong>, son vulnerables a incumplimiento, y son invisibles al sistema financiero.</p>
+      <span class="slide-number">2/10</span>
+    </div>
+
+    <!-- Slide 3: Solution -->
+    <div class="slide">
+      <h2>La Solución: AvalAyllu</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>🔄 Pools Rotativos</h3>
+          <p>Smart contracts auto-ejecutables con USDC. Sin intermediarios.</p>
+        </div>
+        <div class="card">
+          <h3>📊 Ayni Score</h3>
+          <p>Scoring crediticio on-chain basado en comportamiento real de pago.</p>
+        </div>
+        <div class="card">
+          <h3>🤖 AI Analysis</h3>
+          <p>Claude evalúa confiabilidad y Wavy Node detecta riesgos.</p>
+        </div>
+      </div>
+      <span class="slide-number">3/10</span>
+    </div>
+
+    <!-- Slide 4: How it works -->
+    <div class="slide">
+      <h2>¿Cómo Funciona?</h2>
+      <div class="flow">
+        <div class="flow-step">1. Crear Ayllu<br><small>Definir miembros, monto, duración</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">2. Unirse<br><small>Hasta completar cupo</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">3. Contribuir<br><small>Todos aportan USDC</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">4. Recibir Pot<br><small>Turno automático</small></div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-step">5. Score +<br><small>Historial crece</small></div>
+      </div>
+      <p style="margin-top: 2rem;">Cada ronda es una prueba de confiabilidad. Al completar el ciclo, <strong style="color:#fc8181">todos ganan</strong>: ahorro forzado + historial crediticio verificable.</p>
+      <span class="slide-number">4/10</span>
+    </div>
+
+    <!-- Slide 5: Why Avalanche -->
+    <div class="slide">
+      <h2>¿Por qué Avalanche?</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>⚡ Sub-segundo</h3>
+          <p>Finalidad en ~2s. Experiencia similar a apps financieras tradicionales.</p>
+        </div>
+        <div class="card">
+          <h3>💰 Fees ~$0.01</h3>
+          <p>Viable para micro-ahorro. Contribuciones desde $5 USDC.</p>
+        </div>
+        <div class="card">
+          <h3>🏛️ Institucional</h3>
+          <p>Securitize, Fireblocks, Circle USDC nativo. Listo para compliance.</p>
+        </div>
+        <div class="card">
+          <h3>🌎 LatAm First</h3>
+          <p>Ecosistema creciente en la región. Stablecoins locales (BRZ, MXNB).</p>
+        </div>
+      </div>
+      <span class="slide-number">5/10</span>
+    </div>
+
+    <!-- Slide 6: Ayni Score -->
+    <div class="slide">
+      <h2>Ayni Score: Crédito On-Chain</h2>
+      <div class="grid grid-2" style="max-width: 800px;">
+        <div class="card">
+          <h3 style="color: #48bb78;">+50 pts</h3>
+          <p>Por cada ronda pagada a tiempo</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #48bb78;">+100 pts</h3>
+          <p>Por completar un Ayllu completo</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f56565;">-25 pts</h3>
+          <p>Por cada pago tardío</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #ecc94b;">🤖 AI Boost</h3>
+          <p>Claude analiza patrones y predice confiabilidad</p>
+        </div>
+      </div>
+      <p style="margin-top: 2rem;">Score range: 0-1000. Verificable on-chain. Portable entre protocolos DeFi.</p>
+      <span class="slide-number">6/10</span>
+    </div>
+
+    <!-- Slide 7: Market -->
+    <div class="slide">
+      <h2>Mercado</h2>
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="stat" style="font-size: 2.5rem;">🇧🇴</div>
+          <h3>Bolivia</h3>
+          <p>3M+ en Pasanaku</p>
+        </div>
+        <div class="card">
+          <div class="stat" style="font-size: 2.5rem;">🇲🇽</div>
+          <h3>México</h3>
+          <p>15M+ en Tandas</p>
+        </div>
+        <div class="card">
+          <div class="stat" style="font-size: 2.5rem;">🇨🇴</div>
+          <h3>Colombia</h3>
+          <p>5M+ en Natilleras</p>
+        </div>
+        <div class="card">
+          <div class="stat" style="font-size: 2.5rem;">🇵🇪</div>
+          <h3>Perú</h3>
+          <p>4M+ en Juntas</p>
+        </div>
+      </div>
+      <p style="margin-top: 2rem;"><strong style="color:#fc8181">TAM: $50B+ anuales</strong> en ahorro rotativo informal en LatAm</p>
+      <span class="slide-number">7/10</span>
+    </div>
+
+    <!-- Slide 8: Business Model -->
+    <div class="slide">
+      <h2>Modelo de Negocio</h2>
+      <div class="grid grid-2" style="max-width: 800px;">
+        <div class="card">
+          <h3>💸 Fee 0.5-1%</h3>
+          <p>Comisión por distribución de pot. Escalable con volumen.</p>
+        </div>
+        <div class="card">
+          <h3>📊 Score-as-a-Service</h3>
+          <p>API de Ayni Score para fintechs y bancos. B2B SaaS.</p>
+        </div>
+        <div class="card">
+          <h3>🏦 Partnerships</h3>
+          <p>Integración con bancos para créditos basados en score on-chain.</p>
+        </div>
+        <div class="card">
+          <h3>⭐ Premium</h3>
+          <p>Pools privados, montos mayores, insurance pools.</p>
+        </div>
+      </div>
+      <span class="slide-number">8/10</span>
+    </div>
+
+    <!-- Slide 9: Tech Stack -->
+    <div class="slide">
+      <h2>Arquitectura Técnica</h2>
+      <div class="grid grid-3">
+        <div class="card">
+          <h3>Smart Contracts</h3>
+          <span class="badge badge-gray">Solidity 0.8.24</span>
+          <span class="badge badge-gray">OpenZeppelin</span>
+          <span class="badge badge-gray">Hardhat</span>
+          <p style="margin-top: 0.5rem;">AylluPool + AyniScore + MockUSDC</p>
+        </div>
+        <div class="card">
+          <h3>Frontend</h3>
+          <span class="badge badge-gray">Next.js 14</span>
+          <span class="badge badge-gray">wagmi + viem</span>
+          <span class="badge badge-gray">RainbowKit</span>
+          <p style="margin-top: 0.5rem;">TypeScript + Tailwind + Framer Motion</p>
+        </div>
+        <div class="card">
+          <h3>AI & Risk</h3>
+          <span class="badge badge-gray">Claude API</span>
+          <span class="badge badge-gray">Wavy Node</span>
+          <span class="badge badge-gray">Supabase</span>
+          <p style="margin-top: 0.5rem;">Scoring + Análisis + Cache off-chain</p>
+        </div>
+      </div>
+      <div class="partners" style="margin-top: 2rem;">
+        <span class="partner">🔴 Avalanche C-Chain</span>
+        <span class="partner">🟣 Wavy Node</span>
+        <span class="partner">🟠 Oracle Credits</span>
+        <span class="partner">🔵 Claude AI</span>
+      </div>
+      <span class="slide-number">9/10</span>
+    </div>
+
+    <!-- Slide 10: CTA -->
+    <div class="slide">
+      <div class="logo">🏔️</div>
+      <h1>AvalAyllu</h1>
+      <h2 style="font-size: 1.8rem; color: #a0aec0;">Construyendo puentes entre la confianza ancestral y las finanzas del futuro</h2>
+      <div style="margin-top: 2rem;">
+        <p style="font-size: 1.1rem;"><strong style="color:#fc8181">Ayni</strong> — "Hoy por ti, mañana por mí"</p>
+      </div>
+      <div class="partners" style="margin-top: 3rem;">
+        <span class="badge badge-red">GitHub: avalayllu</span>
+        <span class="badge badge-red">Track: Financial Inclusion</span>
+        <span class="badge badge-red">Avalanche LatAm 2026</span>
+      </div>
+      <span class="slide-number">10/10</span>
+    </div>
+
+  </div>
+
+  <script>
+    // Navegacion con teclado
+    document.addEventListener('keydown', (e) => {
+      const slides = document.querySelector('.slides');
+      if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        slides.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+      }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        slides.scrollBy({ top: -window.innerHeight, behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>
