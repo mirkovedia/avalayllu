@@ -8,9 +8,12 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ScoreGauge } from "@/components/score/ScoreGauge";
 import { AylluCard } from "@/components/ayllu/AylluCard";
+import { ActivityFeed } from "@/components/dashboard/ActivityFeed";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { PageTransition, StaggerContainer, StaggerItem } from "@/components/ui/PageTransition";
+import { useToast } from "@/components/ui/Toast";
 import { formatUSDC } from "@/lib/utils";
 import { Plus, Users, Wallet, Coins } from "lucide-react";
 import Link from "next/link";
@@ -43,21 +46,25 @@ export default function DashboardPage() {
   const { data: nextId } = useNextAylluId();
   const { mint, isPending: isMinting } = useMintUsdc();
 
+  const { addToast } = useToast();
+
   if (!isConnected) {
     return (
       <div className="min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
-          <Card className="max-w-md w-full text-center">
-            <Wallet className="h-16 w-16 text-ayllu-sun mx-auto mb-4" />
-            <h2 className="text-2xl font-display font-bold mb-2">Conecta tu wallet</h2>
-            <p className="text-white/50 mb-6">
-              Necesitas una wallet conectada a Avalanche Fuji para usar AvalAyllu.
-            </p>
-            <div className="flex justify-center">
-              <ConnectButton />
-            </div>
-          </Card>
+          <PageTransition>
+            <Card className="max-w-md w-full text-center animate-glow">
+              <Wallet className="h-16 w-16 text-ayllu-sun mx-auto mb-4" />
+              <h2 className="text-2xl font-display font-bold mb-2">Conecta tu wallet</h2>
+              <p className="text-white/50 mb-6">
+                Necesitas una wallet conectada a Avalanche Fuji para usar AvalAyllu.
+              </p>
+              <div className="flex justify-center">
+                <ConnectButton />
+              </div>
+            </Card>
+          </PageTransition>
         </div>
         <Footer />
       </div>
@@ -99,7 +106,11 @@ export default function DashboardPage() {
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => address && mint(address, parseUnits("1000", 6))}
+                onClick={() => {
+                  if (!address) return;
+                  addToast({ type: "loading", title: "Minteando USDC...", description: "Confirma en tu wallet" });
+                  mint(address, parseUnits("1000", 6));
+                }}
                 isLoading={isMinting}
               >
                 Obtener 1,000 USDC (Testnet)
@@ -137,23 +148,29 @@ export default function DashboardPage() {
           </div>
 
           {aylluCount === 0 ? (
-            <Card className="text-center py-12">
-              <Users className="h-12 w-12 text-white/20 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold mb-2">No hay Ayllus aun</h3>
-              <p className="text-sm text-white/40 mb-4">
-                Crea el primer grupo de ahorro rotativo o unete a uno existente.
-              </p>
-              <Link href="/ayllu/crear">
-                <Button>Crear mi primer Ayllu</Button>
-              </Link>
+            <Card>
+              <EmptyState
+                icon={Users}
+                title="No hay Ayllus aun"
+                description="Crea el primer grupo de ahorro rotativo o unete a uno existente."
+                actionLabel="Crear mi primer Ayllu"
+                actionHref="/ayllu/crear"
+              />
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {aylluIds.map((id) => (
-                <AylluListItem key={id} aylluId={id} />
+                <StaggerItem key={id}>
+                  <AylluListItem aylluId={id} />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           )}
+        </div>
+
+        {/* Activity Feed */}
+        <div className="mb-8">
+          <ActivityFeed />
         </div>
       </main>
 

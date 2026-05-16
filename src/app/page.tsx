@@ -2,9 +2,10 @@
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { motion } from "framer-motion";
-import { Mountain, Users, Coins, Shield, ArrowRight, Zap, Globe, TrendingUp } from "lucide-react";
+import { Users, Coins, Shield, ArrowRight, Zap, Globe, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
+import { Logo, LogoIcon } from "@/components/ui/Logo";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -73,18 +74,19 @@ export default function LandingPage() {
       {/* Navbar */}
       <nav className="fixed top-0 w-full z-50 glass border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          <div className="flex items-center gap-2">
-            <Mountain className="h-7 w-7 text-ayllu-sun" />
-            <span className="font-display font-bold text-xl text-white">
-              Aval<span className="text-ayllu-sun">Ayllu</span>
-            </span>
-          </div>
+          <Logo size="sm" />
           <div className="flex items-center gap-4">
             <Link
               href="/dashboard"
               className="hidden sm:block text-sm text-white/60 hover:text-white transition-colors"
             >
               Dashboard
+            </Link>
+            <Link
+              href="/leaderboard"
+              className="hidden sm:block text-sm text-white/60 hover:text-white transition-colors"
+            >
+              Ranking
             </Link>
             <ConnectButton showBalance={false} chainStatus="icon" accountStatus="address" />
           </div>
@@ -243,9 +245,7 @@ export default function LandingPage() {
           >
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-shrink-0">
-                <div className="w-24 h-24 rounded-2xl bg-gradient-sun flex items-center justify-center">
-                  <Mountain className="h-12 w-12 text-white" />
-                </div>
+                <LogoIcon size={96} />
               </div>
               <div>
                 <h3 className="text-2xl font-display font-bold mb-3">

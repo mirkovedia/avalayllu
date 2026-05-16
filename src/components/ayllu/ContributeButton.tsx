@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { useContribute } from "@/hooks/useAylluPool";
 import { useUsdcAllowance, useApproveUsdc } from "@/hooks/useWallet";
+import { useToast } from "@/components/ui/Toast";
 import { ADDRESSES } from "@/lib/contracts";
 import { formatUSDC, snowscanTxUrl } from "@/lib/utils";
 import { CheckCircle, ExternalLink, Coins } from "lucide-react";
@@ -26,6 +27,7 @@ export const ContributeButton = ({
   isActive,
 }: ContributeButtonProps) => {
   const [step, setStep] = useState<Step>("idle");
+  const { addToast, updateToast } = useToast();
 
   const { data: allowance, refetch: refetchAllowance } = useUsdcAllowance(userAddress, ADDRESSES.AYLLU_POOL);
   const { approve, isPending: isApproving, isSuccess: approveSuccess } = useApproveUsdc();
@@ -42,12 +44,24 @@ export const ContributeButton = ({
   }, [approveSuccess, step, refetchAllowance, contribute, aylluId]);
 
   useEffect(() => {
-    if (contributeSuccess) {
+    if (contributeSuccess && hash) {
       setStep("success");
+      addToast({
+        type: "success",
+        title: "Contribucion exitosa",
+        description: `Aportaste $${formatUSDC(contributionAmount)} USDC al Ayllu`,
+        txHash: hash,
+      });
     }
-  }, [contributeSuccess]);
+  }, [contributeSuccess, hash, addToast, contributionAmount]);
 
   const handleContribute = () => {
+    const toastId = addToast({
+      type: "loading",
+      title: needsApproval ? "Aprobando USDC..." : "Enviando contribucion...",
+      description: "Confirma la transaccion en tu wallet",
+    });
+
     if (needsApproval) {
       setStep("approving");
       approve(ADDRESSES.AYLLU_POOL, contributionAmount);
@@ -55,6 +69,8 @@ export const ContributeButton = ({
       setStep("contributing");
       contribute(aylluId);
     }
+
+    setTimeout(() => updateToast(toastId, { type: "loading", title: "Procesando en blockchain..." }), 3000);
   };
 
   if (!isActive) {

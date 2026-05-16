@@ -3,13 +3,15 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Mountain, LayoutDashboard, Users, Trophy } from "lucide-react";
+import { LayoutDashboard, Users, Trophy, Medal } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/ayllu/crear", label: "Crear Ayllu", icon: Users },
   { href: "/score", label: "Mi Score", icon: Trophy },
+  { href: "/leaderboard", label: "Ranking", icon: Medal },
 ];
 
 export const Navbar = () => {
@@ -20,11 +22,8 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2 group">
-              <Mountain className="h-7 w-7 text-ayllu-sun group-hover:scale-110 transition-transform" />
-              <span className="font-display font-bold text-xl text-white">
-                Aval<span className="text-ayllu-sun">Ayllu</span>
-              </span>
+            <Link href="/" className="group hover:scale-[1.02] transition-transform">
+              <Logo size="sm" />
             </Link>
 
             <div className="hidden md:flex items-center gap-1">

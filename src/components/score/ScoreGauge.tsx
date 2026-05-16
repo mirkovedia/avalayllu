@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 interface ScoreGaugeProps {
   score: number;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
   showLabel?: boolean;
 }
 
@@ -24,6 +24,7 @@ export const ScoreGauge = ({ score, size = "md", showLabel = true }: ScoreGaugeP
   const { stroke, text, label } = getColor();
 
   const sizes = {
+    xs: { svg: 40, fontSize: "text-xs", labelSize: "text-[10px]" },
     sm: { svg: 120, fontSize: "text-2xl", labelSize: "text-xs" },
     md: { svg: 200, fontSize: "text-5xl", labelSize: "text-sm" },
     lg: { svg: 280, fontSize: "text-7xl", labelSize: "text-base" },
