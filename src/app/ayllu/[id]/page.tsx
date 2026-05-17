@@ -1,6 +1,5 @@
 "use client";
 
-import { use } from "react";
 import { useAccount } from "wagmi";
 import { useAyllu, useAylluMembers, useRoundInfo, useJoinAyllu } from "@/hooks/useAylluPool";
 import { Navbar } from "@/components/layout/Navbar";
@@ -13,13 +12,114 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { formatUSDC, getStatusLabel, shortenAddress, snowscanTxUrl } from "@/lib/utils";
-import { ArrowLeft, Users, Coins, Clock, ExternalLink } from "lucide-react";
+import { ArrowLeft, Users, Coins, Clock, ExternalLink, Copy, Check, Share2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 const statusNames = ["FORMING", "ACTIVE", "COMPLETED", "CANCELLED"];
 
-export default function AylluDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
+const ShareInvite = ({
+  aylluId,
+  aylluName,
+  spotsLeft,
+  maxMembers,
+  currentMembers,
+  contributionAmount,
+}: {
+  aylluId: string;
+  aylluName: string;
+  spotsLeft: number;
+  maxMembers: number;
+  currentMembers: number;
+  contributionAmount: bigint;
+}) => {
+  const [copied, setCopied] = useState(false);
+
+  const getShareUrl = () => {
+    if (typeof window === "undefined") return "";
+    return `${window.location.origin}/ayllu/${aylluId}`;
+  };
+
+  const getWhatsAppUrl = () => {
+    const url = getShareUrl();
+    const text = `Unite a mi Ayllu "${aylluName}" en AvalAyllu! Ahorro rotativo de $${formatUSDC(contributionAmount)} USDC por ronda. Faltan ${spotsLeft} lugares. ${url}`;
+    return `https://wa.me/?text=${encodeURIComponent(text)}`;
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(getShareUrl());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="text-center py-4">
+      <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-ayllu-sun/10 mb-4">
+        <Users className="h-8 w-8 text-ayllu-sun animate-pulse" />
+      </div>
+      <h3 className="text-lg font-semibold mb-1">Esperando miembros</h3>
+      <p className="text-sm text-white/50 mb-4">
+        Faltan <span className="text-ayllu-sun font-bold">{spotsLeft}</span> miembros para activar el Ayllu y comenzar las contribuciones.
+      </p>
+      <div className="flex items-center justify-center gap-1.5 mb-6">
+        {Array.from({ length: maxMembers }).map((_, i) => (
+          <div
+            key={i}
+            className={`w-3 h-3 rounded-full transition-colors ${i < currentMembers ? "bg-ayllu-sun" : "bg-white/10"}`}
+          />
+        ))}
+      </div>
+
+      <p className="text-xs text-white/40 mb-3">Invita miembros compartiendo el enlace</p>
+      <div className="flex items-center gap-2 max-w-sm mx-auto">
+        <div className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white/60 truncate">
+          {getShareUrl()}
+        </div>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={handleCopy}
+          className="shrink-0 gap-1"
+        >
+          {copied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
+          {copied ? "Copiado" : "Copiar"}
+        </Button>
+      </div>
+
+      <div className="flex items-center justify-center gap-3 mt-4">
+        <a
+          href={getWhatsAppUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/20 text-green-400 rounded-lg text-sm font-medium hover:bg-green-600/30 transition-colors"
+        >
+          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <button
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: `Unite a ${aylluName}`,
+                text: `Ahorro rotativo de $${formatUSDC(contributionAmount)} USDC. Faltan ${spotsLeft} lugares.`,
+                url: getShareUrl(),
+              });
+            }
+          }}
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 text-white/70 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors"
+        >
+          <Share2 className="h-4 w-4" />
+          Compartir
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default function AylluDetailPage({ params }: { params: { id: string } }) {
+  const { id } = params;
   const aylluId = /^\d+$/.test(id) ? BigInt(id) : BigInt(0);
   const { address, isConnected } = useAccount();
 
@@ -131,6 +231,17 @@ export default function AylluDetailPage({ params }: { params: Promise<{ id: stri
                     userAddress={address}
                     hasContributed={currentMember.hasContributedThisRound}
                     isActive={isActive}
+                  />
+                )}
+
+                {isForming && isMember && (
+                  <ShareInvite
+                    aylluId={id}
+                    aylluName={ayllu.name}
+                    spotsLeft={ayllu.maxMembers - ayllu.currentMemberCount}
+                    maxMembers={ayllu.maxMembers}
+                    currentMembers={ayllu.currentMemberCount}
+                    contributionAmount={ayllu.contributionAmount}
                   />
                 )}
 

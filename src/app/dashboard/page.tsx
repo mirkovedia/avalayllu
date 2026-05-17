@@ -1,6 +1,6 @@
 "use client";
 
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import { useAyniScore } from "@/hooks/useAyniScore";
 import { useUsdcBalance, useMintUsdc } from "@/hooks/useWallet";
 import { useNextAylluId, useAyllu } from "@/hooks/useAylluPool";
@@ -15,7 +15,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { PageTransition, StaggerContainer, StaggerItem } from "@/components/ui/PageTransition";
 import { useToast } from "@/components/ui/Toast";
 import { formatUSDC } from "@/lib/utils";
-import { Plus, Users, Wallet, Coins } from "lucide-react";
+import { Plus, Users, Wallet, Coins, AlertTriangle, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { parseUnits } from "viem";
@@ -43,8 +43,11 @@ export default function DashboardPage() {
   const { address, isConnected } = useAccount();
   const { data: score } = useAyniScore(address);
   const { data: balance } = useUsdcBalance(address);
+  const { data: avaxBalance } = useBalance({ address });
   const { data: nextId } = useNextAylluId();
   const { mint, isPending: isMinting } = useMintUsdc();
+
+  const needsAvax = avaxBalance && avaxBalance.value === BigInt(0);
 
   const { addToast } = useToast();
 
@@ -84,6 +87,26 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-display font-bold">Dashboard</h1>
           <p className="text-white/50 mt-1">Tu centro de control en AvalAyllu</p>
         </div>
+
+        {/* Banner: necesita AVAX para gas */}
+        {needsAvax && (
+          <div className="mb-6 flex items-center gap-3 bg-amber-500/10 border border-amber-500/30 rounded-xl px-4 py-3">
+            <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-amber-300">Necesitas AVAX para gas</p>
+              <p className="text-xs text-white/50">Obtene AVAX gratis del faucet de Fuji para poder hacer transacciones.</p>
+            </div>
+            <a
+              href="https://core.app/tools/testnet-faucet/?subnet=c&token=c"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-amber-500/20 text-amber-300 rounded-lg text-sm font-medium hover:bg-amber-500/30 transition-colors shrink-0"
+            >
+              Ir al Faucet
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        )}
 
         {/* Score + Balance Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

@@ -3,12 +3,13 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Users, Trophy, Medal } from "lucide-react";
+import { LayoutDashboard, Users, Trophy, Medal, Compass } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/explorar", label: "Explorar", icon: Compass },
   { href: "/ayllu/crear", label: "Crear Ayllu", icon: Users },
   { href: "/score", label: "Mi Score", icon: Trophy },
   { href: "/leaderboard", label: "Ranking", icon: Medal },
