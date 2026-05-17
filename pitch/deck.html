@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AvalAyllu — Pitch Deck</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0D1B2A;
+    color: #E0E0E0;
+    overflow-x: hidden;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    margin: 20px auto;
+    padding: 60px 80px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #0D1B2A;
+    border: 1px solid rgba(249,172,27,0.1);
+    border-radius: 8px;
+    page-break-after: always;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(249,172,27,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .slide-number {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.2);
+    font-weight: 600;
+  }
+
+  .logo-bar {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo-bar .dot {
+    width: 24px;
+    height: 24px;
+    background: #F9AC1B;
+    border-radius: 50%;
+  }
+
+  .logo-bar span {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: 56px;
+    font-weight: 900;
+    line-height: 1.1;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  h1 .accent { color: #F9AC1B; }
+
+  h2 {
+    font-size: 42px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  h2 .accent { color: #F9AC1B; }
+
+  h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #F9AC1B;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  p {
+    font-size: 20px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .subtitle {
+    font-size: 24px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+
+  .big-number {
+    font-size: 64px;
+    font-weight: 900;
+    color: #F9AC1B;
+    line-height: 1;
+  }
+
+  .big-number.white { color: #FFFFFF; }
+
+  .stat-label {
+    font-size: 16px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  .card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 30px;
+  }
+
+  .card.highlight {
+    border-color: rgba(249,172,27,0.3);
+    background: rgba(249,172,27,0.05);
+  }
+
+  .pain-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+
+  .pain-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .pain-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+
+  .flow-step {
+    text-align: center;
+    position: relative;
+  }
+
+  .flow-step .number {
+    width: 48px;
+    height: 48px;
+    background: #F9AC1B;
+    color: #0D1B2A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    margin: 0 auto 16px;
+  }
+
+  .flow-step .step-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .flow-step .step-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.4;
+  }
+
+  .flow-arrow {
+    position: absolute;
+    top: 24px;
+    right: -18px;
+    color: rgba(249,172,27,0.3);
+    font-size: 24px;
+  }
+
+  .tech-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .tech-badge.avax {
+    border-color: rgba(232,65,66,0.3);
+    color: #E84142;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(249,172,27,0.15);
+    color: #F9AC1B;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, rgba(249,172,27,0.15), rgba(249,172,27,0.05));
+    border: 1px solid rgba(249,172,27,0.3);
+    border-radius: 16px;
+    padding: 30px 40px;
+    text-align: center;
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .team-avatar {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #F9AC1B, #E84142);
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 900;
+    color: #0D1B2A;
+  }
+
+  .team-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 4px;
+  }
+
+  .team-role {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .divider {
+    width: 60px;
+    height: 3px;
+    background: #F9AC1B;
+    margin: 16px 0;
+    border-radius: 2px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  ul li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 8px;
+    height: 8px;
+    background: #F9AC1B;
+    border-radius: 50%;
+  }
+
+  @media print {
+    .slide { margin: 0; border: none; border-radius: 0; }
+    body { background: #0D1B2A; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- SLIDE 1: TITULO -->
+<!-- ============================================ -->
+<div class="slide" style="justify-content: center; text-align: center;">
+  <div style="margin-bottom: 40px;">
+    <div style="width:64px;height:64px;background:#F9AC1B;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;">
+      <span style="font-size:32px;font-weight:900;color:#0D1B2A;">A</span>
+    </div>
+    <h1 style="font-size:72px;margin-bottom:8px;">Aval<span class="accent">Ayllu</span></h1>
+    <div class="divider" style="margin: 16px auto;"></div>
+    <p class="subtitle" style="margin-bottom:8px;">Ahorro rotativo descentralizado para Latinoamerica</p>
+    <p style="font-size:16px;color:rgba(255,255,255,0.3);">
+      Pasanaku + Blockchain = Inclusion financiera real
+    </p>
+  </div>
+  <div style="position:absolute;bottom:40px;left:0;right:0;text-align:center;">
+    <p style="font-size:14px;color:rgba(255,255,255,0.25);">Avalanche LatAm Institucional 2026 &nbsp;|&nbsp; Mayo 2026</p>
+  </div>
+  <span class="slide-number">01</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 2: PROBLEMA -->
+<!-- ============================================ -->
+<div class="slide">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <h3>El problema</h3>
+  <h2>200M de latinoamericanos ahorran<br>en <span class="accent">sistemas informales sin garantias</span></h2>
+
+  <div class="grid-3" style="margin-top:32px;">
+    <div class="card">
+      <div class="pain-icon">💸</div>
+      <div class="pain-title">Sin proteccion</div>
+      <div class="pain-desc">El organizador puede desaparecer con el dinero. No hay contrato legal ni recurso.</div>
+    </div>
+    <div class="card">
+      <div class="pain-icon">🚫</div>
+      <div class="pain-title">Sin historial</div>
+      <div class="pain-desc">Cumplir pagos no construye credito. El sistema financiero no reconoce tu disciplina.</div>
+    </div>
+    <div class="card">
+      <div class="pain-icon">🔒</div>
+      <div class="pain-title">Solo confianza</div>
+      <div class="pain-desc">Solo funciona entre conocidos. No escala. Un miembro que no paga rompe todo el grupo.</div>
+    </div>
+  </div>
+
+  <p style="margin-top:24px;font-size:16px;text-align:center;color:rgba(255,255,255,0.3);">
+    Pasanaku (Bolivia) &bull; Tanda (Mexico) &bull; Vaca (Colombia) &bull; San (Haiti) &bull; Pandero (Peru)
+  </p>
+  <span class="slide-number">02</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 3: SOLUCION -->
+<!-- ============================================ -->
+<div class="slide">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <h3>La solucion</h3>
+  <h2>Smart contracts que <span class="accent">automatizan</span><br>el ahorro rotativo</h2>
+
+  <div class="grid-2" style="margin-top:32px;">
+    <div>
+      <ul>
+        <li><strong style="color:#fff;">Fondos protegidos por contrato</strong> — nadie puede robar el pozo, se distribuye automaticamente</li>
+        <li><strong style="color:#fff;">Ayni Score on-chain</strong> — cada pago puntual construye tu reputacion crediticia descentralizada</li>
+        <li><strong style="color:#fff;">Abierto a todos</strong> — no necesitas conocer a los miembros, el contrato garantiza el cumplimiento</li>
+        <li><strong style="color:#fff;">USDC estable</strong> — sin volatilidad, ahorro real en dolares digitales</li>
+      </ul>
+    </div>
+    <div class="card highlight" style="text-align:center;padding:40px;">
+      <div style="font-size:48px;margin-bottom:16px;">🏔️</div>
+      <div style="font-size:28px;font-weight:700;color:#F9AC1B;margin-bottom:8px;">Ayni</div>
+      <p style="font-size:15px;color:rgba(255,255,255,0.5);">
+        Principio andino de reciprocidad.<br>
+        "Hoy por ti, manana por mi."<br><br>
+        AvalAyllu lleva esta filosofia<br>
+        milenaria a la blockchain.
+      </p>
+    </div>
+  </div>
+  <span class="slide-number">03</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 4: COMO FUNCIONA -->
+<!-- ============================================ -->
+<div class="slide">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <h3>Como funciona</h3>
+  <h2>4 pasos, <span class="accent">completamente on-chain</span></h2>
+
+  <div class="grid-4" style="margin-top:40px;">
+    <div class="flow-step">
+      <div class="number">1</div>
+      <div class="step-title">Crear Ayllu</div>
+      <div class="step-desc">Define miembros, aporte por ronda y duracion. El contrato se despliega.</div>
+      <div class="flow-arrow">→</div>
+    </div>
+    <div class="flow-step">
+      <div class="number">2</div>
+      <div class="step-title">Unirse</div>
+      <div class="step-desc">Los miembros se unen. Al completarse, el ayllu se activa automaticamente.</div>
+      <div class="flow-arrow">→</div>
+    </div>
+    <div class="flow-step">
+      <div class="number">3</div>
+      <div class="step-title">Contribuir</div>
+      <div class="step-desc">Cada ronda, todos aportan USDC. El pozo se distribuye al miembro de turno.</div>
+      <div class="flow-arrow">→</div>
+    </div>
+    <div class="flow-step">
+      <div class="number">4</div>
+      <div class="step-title">Completar</div>
+      <div class="step-desc">Todos reciben su pozo. El Ayni Score se actualiza con su historial.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;text-align:center;">
+    <div class="card highlight" style="display:inline-block;padding:16px 32px;">
+      <span style="font-size:16px;color:rgba(255,255,255,0.5);">Ejemplo: 4 miembros &times; $50 USDC = </span>
+      <span style="font-size:20px;font-weight:900;color:#F9AC1B;">$200 USDC</span>
+      <span style="font-size:16px;color:rgba(255,255,255,0.5);"> por ronda para cada miembro</span>
+    </div>
+  </div>
+  <span class="slide-number">04</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 5: TECH + POR QUE AVALANCHE -->
+<!-- ============================================ -->
+<div class="slide">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <h3>Arquitectura</h3>
+  <h2><span class="accent">Por que Avalanche</span> es perfecto para esto</h2>
+
+  <div class="grid-2" style="margin-top:28px;">
+    <div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="pain-title" style="color:#E84142;">⚡ Finalidad sub-segundo</div>
+        <div class="pain-desc">Las contribuciones se confirman en &lt;1s. UX comparable a Venmo o apps de pago tradicionales.</div>
+      </div>
+      <div class="card" style="margin-bottom:20px;">
+        <div class="pain-title" style="color:#E84142;">💰 Gas ultra bajo</div>
+        <div class="pain-desc">Contribuir cuesta ~$0.01 en gas. Viable para micro-ahorro desde $5 USDC.</div>
+      </div>
+      <div class="card">
+        <div class="pain-title" style="color:#E84142;">🔗 Subnet-ready</div>
+        <div class="pain-desc">Escalable a subnet propia para LatAm con reglas de compliance locales y fees customizados.</div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="padding:28px;">
+        <p style="font-size:14px;color:rgba(255,255,255,0.3);margin-bottom:16px;font-weight:600;letter-spacing:2px;">STACK TECNICO</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;">
+          <span class="tech-badge avax">Avalanche C-Chain</span>
+          <span class="tech-badge">Solidity 0.8.24</span>
+          <span class="tech-badge">OpenZeppelin</span>
+          <span class="tech-badge">Next.js 14</span>
+          <span class="tech-badge">wagmi + viem</span>
+          <span class="tech-badge">RainbowKit</span>
+          <span class="tech-badge">Supabase</span>
+          <span class="tech-badge">Claude AI</span>
+          <span class="tech-badge">TypeScript</span>
+        </div>
+        <div class="divider" style="margin:20px 0 16px;"></div>
+        <p style="font-size:14px;color:rgba(255,255,255,0.3);margin-bottom:12px;font-weight:600;letter-spacing:2px;">CONTRATOS EN FUJI</p>
+        <div style="font-family:monospace;font-size:12px;color:rgba(255,255,255,0.35);line-height:2;">
+          AylluPool: 0xebAf...BC61<br>
+          AyniScore: 0x5dD4...8D95<br>
+          MockUSDC: 0x59Ed...0115
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-number">05</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 6: MERCADO + IMPACTO -->
+<!-- ============================================ -->
+<div class="slide">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <h3>Oportunidad</h3>
+  <h2>Un mercado de <span class="accent">$500B+</span> en ahorro informal</h2>
+
+  <div class="grid-3" style="margin-top:32px;">
+    <div class="card" style="text-align:center;">
+      <div class="big-number">200M+</div>
+      <div class="stat-label">Personas en LatAm sin<br>acceso bancario completo</div>
+    </div>
+    <div class="card highlight" style="text-align:center;">
+      <div class="big-number">$500B</div>
+      <div class="stat-label">Circulan anualmente en<br>sistemas de ahorro informal</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="big-number white">70%</div>
+      <div class="stat-label">De adultos en Bolivia<br>usan ahorro informal</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:28px;padding:20px 32px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <span class="tag">Impacto social</span>
+        <p style="font-size:17px;color:rgba(255,255,255,0.6);">
+          Cada Ayllu completado genera un <strong style="color:#F9AC1B;">Ayni Score</strong> — historial crediticio on-chain que puede ser la puerta de entrada al sistema financiero formal.
+        </p>
+      </div>
+      <div style="text-align:center;padding-left:40px;">
+        <div style="font-size:48px;font-weight:900;color:#F9AC1B;">DeFi</div>
+        <div style="font-size:14px;color:rgba(255,255,255,0.3);">para el<br>mundo real</div>
+      </div>
+    </div>
+  </div>
+  <span class="slide-number">06</span>
+</div>
+
+<!-- ============================================ -->
+<!-- SLIDE 7: DEMO + CTA -->
+<!-- ============================================ -->
+<div class="slide" style="text-align:center;">
+  <div class="logo-bar"><div class="dot"></div><span>AvalAyllu</span></div>
+
+  <div style="margin-top:20px;">
+    <h3>Live en Fuji Testnet</h3>
+    <h2 style="font-size:48px;">Probalo <span class="accent">ahora</span></h2>
+  </div>
+
+  <div class="grid-3" style="margin-top:32px;text-align:center;">
+    <div class="card">
+      <div style="font-size:36px;margin-bottom:12px;">🌐</div>
+      <div class="pain-title">App</div>
+      <div style="font-family:monospace;font-size:14px;color:#F9AC1B;margin-top:8px;">avalayllu.vercel.app</div>
+    </div>
+    <div class="card">
+      <div style="font-size:36px;margin-bottom:12px;">📜</div>
+      <div class="pain-title">Contratos verificados</div>
+      <div style="font-family:monospace;font-size:14px;color:#F9AC1B;margin-top:8px;">testnet.snowscan.xyz</div>
+    </div>
+    <div class="card">
+      <div style="font-size:36px;margin-bottom:12px;">🧪</div>
+      <div class="pain-title">16/16 Tests</div>
+      <div style="font-family:monospace;font-size:14px;color:#F9AC1B;margin-top:8px;">E2E on-chain passing</div>
+    </div>
+  </div>
+
+  <div class="cta-box" style="margin-top:40px;">
+    <p style="font-size:14px;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:600;letter-spacing:2px;">ROADMAP</p>
+    <div style="display:flex;justify-content:center;gap:40px;margin-top:16px;">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#F9AC1B;">Q2 2026</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Mainnet C-Chain</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.15);">→</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#F9AC1B;">Q3 2026</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Subnet LatAm</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.15);">→</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#F9AC1B;">Q4 2026</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Integracion fintech</div>
+      </div>
+      <div style="color:rgba(255,255,255,0.15);">→</div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:#F9AC1B;">2027</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);">Pan-LatAm + Africa</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <p style="font-size:20px;color:#F9AC1B;font-weight:700;">
+      Hoy por ti, manana por mi.
+    </p>
+    <p style="font-size:15px;color:rgba(255,255,255,0.3);margin-top:8px;">
+      AvalAyllu — Donde la reciprocidad andina se encuentra con la blockchain.
+    </p>
+  </div>
+  <span class="slide-number">07</span>
+</div>
+
+</body>
+</html>
