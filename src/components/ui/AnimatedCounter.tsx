@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
 
 interface AnimatedCounterProps {
   value: number;
@@ -19,11 +18,28 @@ export const AnimatedCounter = ({
   className = "",
 }: AnimatedCounterProps) => {
   const [displayValue, setDisplayValue] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
 
   useEffect(() => {
-    if (!isInView) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
 
     const startTime = Date.now();
     const endTime = startTime + duration * 1000;
@@ -40,16 +56,11 @@ export const AnimatedCounter = ({
     };
 
     requestAnimationFrame(tick);
-  }, [isInView, value, duration]);
+  }, [isVisible, value, duration]);
 
   return (
-    <motion.span
-      ref={ref}
-      className={className}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
-    >
+    <span ref={ref} className={`${className} ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
       {prefix}{displayValue.toLocaleString()}{suffix}
-    </motion.span>
+    </span>
   );
 };

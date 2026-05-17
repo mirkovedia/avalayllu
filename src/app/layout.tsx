@@ -1,7 +1,20 @@
 import type { Metadata } from "next";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { Providers } from "./providers";
 import { MobileNavWrapper } from "./MobileNavWrapper";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "AvalAyllu — Ahorro Rotativo Descentralizado",
@@ -32,7 +45,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
       </head>
-      <body className="min-h-screen antialiased pb-16 md:pb-0">
+      <body className={`${inter.variable} ${spaceGrotesk.variable} min-h-screen antialiased pb-16 md:pb-0`}>
         <Providers>
           {children}
           <MobileNavWrapper />

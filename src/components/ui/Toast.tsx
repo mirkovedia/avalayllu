@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useCallback, useContext, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle, XCircle, AlertCircle, Loader2, X } from "lucide-react";
 
 type ToastType = "success" | "error" | "warning" | "loading";
@@ -42,7 +41,7 @@ const bgColors: Record<ToastType, string> = {
   loading: "border-ayllu-sun/30",
 };
 
-const EXPLORER_URL = "https://testnet.snowtrace.io/tx/";
+const EXPLORER_URL = "https://testnet.snowscan.xyz/tx/";
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -82,47 +81,40 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
 
       {/* Toast container */}
       <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 max-w-sm w-full pointer-events-none">
-        <AnimatePresence mode="popLayout">
-          {toasts.map((toast) => (
-            <motion.div
-              key={toast.id}
-              layout
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 100, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className={`pointer-events-auto glass border ${bgColors[toast.type]} rounded-xl p-4 shadow-xl`}
-            >
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 mt-0.5">
-                  {icons[toast.type]}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white">{toast.title}</p>
-                  {toast.description && (
-                    <p className="text-xs text-white/50 mt-0.5">{toast.description}</p>
-                  )}
-                  {toast.txHash && (
-                    <a
-                      href={`${EXPLORER_URL}${toast.txHash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-ayllu-sun hover:underline mt-1 inline-block"
-                    >
-                      Ver en Snowtrace →
-                    </a>
-                  )}
-                </div>
-                <button
-                  onClick={() => removeToast(toast.id)}
-                  className="flex-shrink-0 text-white/30 hover:text-white/60 transition-colors"
-                >
-                  <X className="h-4 w-4" />
-                </button>
+        {toasts.map((toast) => (
+          <div
+            key={toast.id}
+            className={`pointer-events-auto glass border ${bgColors[toast.type]} rounded-xl p-4 shadow-xl animate-toast-in`}
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 mt-0.5">
+                {icons[toast.type]}
               </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white">{toast.title}</p>
+                {toast.description && (
+                  <p className="text-xs text-white/50 mt-0.5">{toast.description}</p>
+                )}
+                {toast.txHash && (
+                  <a
+                    href={`${EXPLORER_URL}${toast.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-ayllu-sun hover:underline mt-1 inline-block"
+                  >
+                    Ver en Snowtrace →
+                  </a>
+                )}
+              </div>
+              <button
+                onClick={() => removeToast(toast.id)}
+                className="flex-shrink-0 text-white/30 hover:text-white/60 transition-colors"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </ToastContext.Provider>
   );

@@ -13,9 +13,10 @@ Hackathon: Avalanche LatAm Institucional 2026.
 - Wavy Node para risk scoring
 
 ## Contratos en Fuji testnet
-- AylluPool: [actualizar tras deploy]
-- AyniScore: [actualizar tras deploy]
-- MockUSDC: [actualizar tras deploy]
+- AylluPool: 0xebAfE271244566aB64ca298b4338dfFC21e6BC61
+- AyniScore: 0x5dD4c9D1d5d7285262ED8b68a1279DC006938D95
+- MockUSDC: 0x59Ed7Efb23a5d55c379a007F8809c3DCcD110115
+- Deployer: 0x567FCdC8e7148a60b91F3367D09EB1b23aF413aC
 
 ## Comandos clave
 - `npm run dev` — inicia el frontend

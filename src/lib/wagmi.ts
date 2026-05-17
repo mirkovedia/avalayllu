@@ -5,16 +5,16 @@ import { avalancheFuji, type Chain } from "viem/chains";
 import { http } from "wagmi";
 
 const hardhatLocal: Chain = {
-  id: 43113,
+  id: 31337,
   name: "Hardhat Local",
-  nativeCurrency: { name: "AVAX", symbol: "AVAX", decimals: 18 },
+  nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
   rpcUrls: {
     default: { http: ["http://127.0.0.1:8545"] },
   },
   testnet: true,
 };
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV === "development" && !process.env.NEXT_PUBLIC_USE_FUJI;
 const chain = isDev ? hardhatLocal : avalancheFuji;
 const rpcUrl = isDev ? "http://127.0.0.1:8545" : "https://api.avax-test.network/ext/bc/C/rpc";
 

@@ -1,17 +1,8 @@
-"use client";
-
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { motion } from "framer-motion";
 import { Users, Coins, Shield, ArrowRight, Zap, Globe, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Logo, LogoIcon } from "@/components/ui/Logo";
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 },
-};
+import { WalletButton } from "@/components/layout/LandingNav";
 
 const steps = [
   {
@@ -88,7 +79,7 @@ export default function LandingPage() {
             >
               Ranking
             </Link>
-            <ConnectButton showBalance={false} chainStatus="icon" accountStatus="address" />
+            <WalletButton />
           </div>
         </div>
       </nav>
@@ -100,40 +91,25 @@ export default function LandingPage() {
         <div className="absolute bottom-10 right-1/4 w-80 h-80 bg-avax-red/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-5xl mx-auto text-center">
-          <motion.div {...fadeInUp}>
+          <div className="animate-fade-in-up">
             <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full text-sm mb-8">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
               Hackathon LatAm Institucional Avalanche 2026
             </div>
-          </motion.div>
+          </div>
 
-          <motion.h1
-            className="text-5xl sm:text-7xl font-display font-bold mb-6 leading-tight"
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-          >
+          <h1 className="animate-fade-in-up animation-delay-100 text-5xl sm:text-7xl font-display font-bold mb-6 leading-tight">
             El Pasanaku
             <br />
             <span className="text-gradient-sun">en Blockchain</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <p className="animate-fade-in-up animation-delay-200 text-lg sm:text-xl text-white/60 max-w-2xl mx-auto mb-10">
             Ahorro rotativo descentralizado en Avalanche. Inspirado en el Ayni
             andino — donde la reciprocidad construye comunidad y credito.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
+          <div className="animate-fade-in-up animation-delay-300 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link href="/dashboard" className="btn-primary text-lg flex items-center gap-2">
               Empezar ahora
               <ArrowRight className="h-5 w-5" />
@@ -141,15 +117,10 @@ export default function LandingPage() {
             <a href="#como-funciona" className="btn-secondary text-lg">
               Como funciona
             </a>
-          </motion.div>
+          </div>
 
           {/* Stats */}
-          <motion.div
-            className="grid grid-cols-3 gap-8 mt-16 max-w-lg mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
+          <div className="animate-fade-in animation-delay-500 grid grid-cols-3 gap-8 mt-16 max-w-lg mx-auto">
             {[
               { value: "< 2s", label: "Finalidad" },
               { value: "$0.01", label: "Por tx" },
@@ -160,7 +131,7 @@ export default function LandingPage() {
                 <div className="text-xs text-white/40 mt-1">{stat.label}</div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -180,13 +151,10 @@ export default function LandingPage() {
             {steps.map((step, i) => {
               const Icon = step.icon;
               return (
-                <motion.div
+                <div
                   key={step.title}
-                  className="glass-card relative group"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.15 }}
+                  className="glass-card relative group animate-fade-in-up"
+                  style={{ animationDelay: `${i * 150}ms` }}
                 >
                   <div className="absolute -top-3 -left-3 w-8 h-8 rounded-full bg-ayllu-sun flex items-center justify-center text-ayllu-night font-bold text-sm">
                     {i + 1}
@@ -196,7 +164,7 @@ export default function LandingPage() {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
                   <p className="text-white/50 text-sm leading-relaxed">{step.description}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -216,18 +184,15 @@ export default function LandingPage() {
             {features.map((feat, i) => {
               const Icon = feat.icon;
               return (
-                <motion.div
+                <div
                   key={feat.title}
-                  className="glass-card text-center"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                  className="glass-card text-center animate-fade-in-up"
+                  style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <Icon className="h-8 w-8 text-ayllu-sun mx-auto mb-3" />
                   <h4 className="font-semibold mb-2">{feat.title}</h4>
                   <p className="text-sm text-white/50">{feat.description}</p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
@@ -237,12 +202,7 @@ export default function LandingPage() {
       {/* Que es el Ayni */}
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <motion.div
-            className="glass-card border-ayllu-sun/20"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="glass-card border-ayllu-sun/20 animate-fade-in-up">
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="flex-shrink-0">
                 <LogoIcon size={96} />
@@ -261,7 +221,7 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -290,11 +250,7 @@ export default function LandingPage() {
       {/* CTA Final */}
       <section className="py-24 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-fade-in-up">
             <h2 className="text-4xl font-display font-bold mb-4">
               Empieza a construir tu <span className="text-gradient-sun">historial crediticio</span>
             </h2>
@@ -305,7 +261,7 @@ export default function LandingPage() {
               Ir al Dashboard
               <ArrowRight className="h-5 w-5" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 

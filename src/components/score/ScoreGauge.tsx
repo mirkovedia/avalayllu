@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface ScoreGaugeProps {
@@ -54,7 +53,7 @@ export const ScoreGauge = ({ score, size = "md", showLabel = true }: ScoreGaugeP
             strokeLinecap="round"
           />
           {/* Arco de progreso */}
-          <motion.circle
+          <circle
             cx="50"
             cy="50"
             r="45"
@@ -63,35 +62,27 @@ export const ScoreGauge = ({ score, size = "md", showLabel = true }: ScoreGaugeP
             strokeWidth="8"
             strokeDasharray={circumference}
             strokeLinecap="round"
-            initial={{ strokeDashoffset: circumference * 0.75 }}
-            animate={{ strokeDashoffset }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="animate-gauge"
+            style={{
+              "--gauge-to": `${strokeDashoffset}`,
+              "--gauge-from": `${circumference * 0.75}`,
+            } as React.CSSProperties}
           />
         </svg>
 
         {/* Numero central */}
         <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingTop: s.svg * 0.08 }}>
-          <motion.span
-            className={cn("font-display font-bold", s.fontSize, text)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-          >
+          <span className={cn("font-display font-bold animate-fade-in animation-delay-500", s.fontSize, text)}>
             {clampedScore}
-          </motion.span>
+          </span>
         </div>
       </div>
 
       {showLabel && (
-        <motion.div
-          className="text-center -mt-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
+        <div className="text-center -mt-2 animate-fade-in animation-delay-500">
           <span className={cn("font-medium", s.labelSize, text)}>{label}</span>
           <p className="text-xs text-white/40 mt-1">Ayni Score</p>
-        </motion.div>
+        </div>
       )}
     </div>
   );

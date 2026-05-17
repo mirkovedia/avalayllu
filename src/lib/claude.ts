@@ -60,7 +60,7 @@ ${input.wavyRiskScore !== undefined ? `Wavy Risk Score: ${input.wavyRiskScore}` 
 `;
 
   const response = await anthropic.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-sonnet-4-6-20250514",
     max_tokens: 500,
     temperature: 0.3,
     system: AYNI_SCORE_SYSTEM_PROMPT,
@@ -72,5 +72,9 @@ ${input.wavyRiskScore !== undefined ? `Wavy Risk Score: ${input.wavyRiskScore}` 
     throw new Error("Respuesta sin texto de Claude");
   }
 
-  return JSON.parse(textContent.text);
+  try {
+    return JSON.parse(textContent.text);
+  } catch {
+    throw new Error(`Respuesta no es JSON valido: ${textContent.text.slice(0, 100)}`);
+  }
 };

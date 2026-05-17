@@ -20,7 +20,7 @@ const statusNames = ["FORMING", "ACTIVE", "COMPLETED", "CANCELLED"];
 
 export default function AylluDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const aylluId = BigInt(id);
+  const aylluId = /^\d+$/.test(id) ? BigInt(id) : BigInt(0);
   const { address, isConnected } = useAccount();
 
   const { data: ayllu, isLoading: aylluLoading } = useAyllu(aylluId);

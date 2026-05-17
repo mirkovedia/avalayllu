@@ -36,8 +36,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Space Grotesk", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
       },
       backgroundImage: {
         "gradient-andean": "linear-gradient(135deg, #0D1B2A 0%, #1E3A5F 50%, #2D6A4F 100%)",

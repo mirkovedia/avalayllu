@@ -45,3 +45,5 @@ typechain-types/
 # IDE
 .idea/
 .vscode/
+
+.vercel

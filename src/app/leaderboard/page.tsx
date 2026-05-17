@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/Card";
 import { ScoreGauge } from "@/components/score/ScoreGauge";
 import { SkeletonTable } from "@/components/ui/Skeleton";
 import { Trophy, Medal, Crown, Users, TrendingUp, Coins } from "lucide-react";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
@@ -118,18 +117,17 @@ export default function LeaderboardPage() {
           ].map((stat, i) => {
             const Icon = stat.icon;
             return (
-              <motion.div
+              <div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${i * 100}ms` }}
               >
                 <Card className="text-center py-4">
                   <Icon className={`h-6 w-6 ${stat.color} mx-auto mb-2`} />
                   <div className="text-2xl font-bold">{stat.value}</div>
                   <div className="text-xs text-white/40">{stat.label}</div>
                 </Card>
-              </motion.div>
+              </div>
             );
           })}
         </div>
@@ -147,12 +145,10 @@ export default function LeaderboardPage() {
           ) : (
             <div className="divide-y divide-white/5">
               {leaderboard.map((entry, i) => (
-                <motion.div
+                <div
                   key={entry.wallet_address}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                  className="flex items-center gap-4 px-4 py-3 hover:bg-white/[0.02] transition-colors"
+                  className="flex items-center gap-4 px-4 py-3 hover:bg-white/[0.02] transition-colors animate-fade-in-up"
+                  style={{ animationDelay: `${i * 50}ms` }}
                 >
                   {/* Rank */}
                   <div className="w-8 flex-shrink-0 text-center">
@@ -188,7 +184,7 @@ export default function LeaderboardPage() {
                       <div className="text-xs text-white/30">{entry.ayllus_completed} ayllus</div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}

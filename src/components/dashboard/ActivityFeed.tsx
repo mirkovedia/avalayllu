@@ -4,7 +4,6 @@ import { useRecentActivity } from "@/hooks/useSupabase";
 import { Card } from "@/components/ui/Card";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { Coins, Users, Plus, Gift } from "lucide-react";
-import { motion } from "framer-motion";
 
 const activityIcons = {
   contribution: { icon: Coins, color: "text-green-400", bg: "bg-green-500/10" },
@@ -62,12 +61,10 @@ export const ActivityFeed = () => {
           {activity.map((entry, i) => {
             const { icon: Icon, color, bg } = activityIcons[entry.type];
             return (
-              <motion.div
+              <div
                 key={entry.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.05 }}
-                className="flex items-center gap-3 py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors"
+                className="flex items-center gap-3 py-2 px-2 rounded-lg hover:bg-white/[0.02] transition-colors animate-fade-in-up"
+                style={{ animationDelay: `${i * 50}ms` }}
               >
                 <div className={`w-8 h-8 rounded-full ${bg} flex items-center justify-center flex-shrink-0`}>
                   <Icon className={`h-4 w-4 ${color}`} />
@@ -89,7 +86,7 @@ export const ActivityFeed = () => {
                 <span className="text-[10px] text-white/30 flex-shrink-0">
                   {formatTimeAgo(entry.created_at)}
                 </span>
-              </motion.div>
+              </div>
             );
           })}
         </div>
